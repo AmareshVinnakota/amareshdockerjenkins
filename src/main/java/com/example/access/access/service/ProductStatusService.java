@@ -21,7 +21,7 @@ public class ProductStatusService {
     @CircuitBreaker(name="productService",fallbackMethod = "productFallBack")
     public ProductStatus getProduct(Long id) {
 
-        Product product = restTemplate.getForObject("http://localhost:8080/"+id, Product.class);
+        Product product = restTemplate.getForObject("http://localhost:8085/"+id, Product.class);
         Product product1 = product;
         ProductStatus productStatus= new ProductStatus(new Long(product1.getId()) ,product1.getPname(), product1.getPrice(), false);
         return  productStatusRepository.save(productStatus);
@@ -41,7 +41,7 @@ public class ProductStatusService {
           return productStatusRepository.save(e);
         }
         else {
-            Product product = restTemplate.getForObject("http://localhost:8080/" + id, Product.class);
+            Product product = restTemplate.getForObject("http://localhost:8085/" + id, Product.class);
             Product product1 = product;
             ProductStatus productStatus = new ProductStatus(new Long(product1.getId()), product1.getPname(), product1.getPrice(), true);
             return productStatusRepository.save(productStatus);
